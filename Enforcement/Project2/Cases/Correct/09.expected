@@ -1,0 +1,7 @@
+program
+  int x;
+begin
+  x=10;
+  output x;
+end
+10

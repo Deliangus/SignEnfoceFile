@@ -1,0 +1,9 @@
+program
+  int x;
+begin
+  while 1<1 begin
+    x=1;
+  endwhile;
+  output 4;
+end
+4

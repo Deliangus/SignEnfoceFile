@@ -1,0 +1,14 @@
+program
+  int x,n;
+begin
+  x=4;
+  while !(x==0) begin
+    input n;
+    x=x-1;
+    output n;
+  endwhile;
+end
+0
+1
+2
+3

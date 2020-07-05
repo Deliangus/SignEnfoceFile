@@ -1,0 +1,7 @@
+program
+  int x,y,z;
+begin
+  input x;
+  output 4;
+end
+4
