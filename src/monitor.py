@@ -7,6 +7,7 @@ root_folder_path = os.path.join(os.getcwd(), "Enforcement").replace('\\', '/')
 database = os.path.join(os.getcwd(), "database")
 filetree = os.path.join(os.getcwd(), "filetree")
 log_file = os.path.join(os.getcwd(), "file_change_log")
+pending = os.path.join(os.getcwd(), "pending")
 
 
 class Folder:
@@ -178,22 +179,24 @@ class Folder:
 
     def read_pending_operation(self, filepath):
         items = {}
-        with open(filepath, 'r') as fin:
-            for line in fin.readlines():
-                line = line.strip().split(',').replace('\\', '/')
-                items[line[0]] = {
-                    "Operation": line[1],
-                    "Operator": line[2],
-                    "Time": line[3],
-                    "Current_MD5": line[4],
-                    "Old_MD5": line[5],
-                    "Current_Name": line[6],
-                    "Old_Name": line[7],
-                    "Public_Key_ID": line[8],
-                }
 
-        for key, ct in items.items():
-            md5val = get_file_md5(key)
+        if (os.path.exists(filepath)):
+            with open(filepath, 'r') as fin:
+                for line in fin.readlines():
+                    line = line.strip().split(',').replace('\\', '/')
+                    items[line[0]] = {
+                        "Operation": line[1],
+                        "Operator": line[2],
+                        "Time": line[3],
+                        "Current_MD5": line[4],
+                        "Old_MD5": line[5],
+                        "Current_Name": line[6],
+                        "Old_Name": line[7],
+                        "Public_Key_ID": line[8],
+                    }
+
+            for key, ct in items.items():
+                md5val = get_file_md5(key)
 
 
 def get_time():
@@ -239,7 +242,7 @@ if __name__ == '__main__':
     while True:
         root_folder = Folder(root_folder_path)
         root_folder.read_file_tree(database)
-        root_folder.read_pending_operation()
+        root_folder.read_pending_operation(pending)
         root_folder.verify_file_tree()
         root_folder.save_verfiy_log()
         root_folder.build_file_tree()
